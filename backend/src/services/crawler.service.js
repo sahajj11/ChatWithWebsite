@@ -2,9 +2,11 @@ import axios from "axios";
 import { parsePage } from "./parser.service.js";
 import { MAX_PAGES, REQUEST_DELAY } from "../utils/constants.js";
 import { delay } from "../utils/delay.js";
+import { canCrawl } from "./robots.service.js";
+import { normalizeUrl } from "../utils/url.js";
 
 export const crawlWebsite = async (startUrl) => {
-    const queue = [startUrl];
+    const queue = [normalizeUrl(startUrl)];
     const visited = new Set();
 
     const pages = [];
@@ -17,6 +19,13 @@ export const crawlWebsite = async (startUrl) => {
         }
 
         visited.add(currentUrl);
+
+        const allowed=await canCrawl(currentUrl)
+
+        if(!allowed){
+            console.log(`Blocked by robots.txt: ${currentUrl}`)
+            continue
+        }
 
         console.log(`Crawling: ${currentUrl}`);
 

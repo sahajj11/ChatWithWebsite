@@ -1,4 +1,5 @@
 import * as cheerio from "cheerio";
+import { normalizeUrl } from "../utils/url.js";
 
 export const parsePage = (html, pageUrl) => {
     const $ = cheerio.load(html);
@@ -40,7 +41,7 @@ const extractInternalLinks = ($, pageUrl) => {
             if (absolute.hostname === base.hostname) {
                 absolute.hash = "";
 
-                links.push(absolute.href);
+                links.push(normalizeUrl(absolute.href))
             }
         } catch {}
     });
