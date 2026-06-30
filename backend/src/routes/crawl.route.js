@@ -1,9 +1,10 @@
 import { Router } from "express";
-import { crawlWebsite } from "../controllers/crawl.controller.js";
+import { crawl } from "../controllers/crawl.controller.js";
+
 
 
 const router = Router();
 
-router.post("/", crawlWebsite);
+router.post("/", crawl);
 
 export default router;

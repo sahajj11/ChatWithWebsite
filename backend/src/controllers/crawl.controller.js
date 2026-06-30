@@ -1,6 +1,6 @@
-import { crawlPage } from "../services/crawler.service.js";
+import { crawlWebsite } from "../services/crawler.service.js";
 
-export const crawlWebsite = async (req, res) => {
+export const crawl = async (req, res) => {
     try {
         const { url } = req.body;
 
@@ -11,18 +11,19 @@ export const crawlWebsite = async (req, res) => {
             });
         }
 
-        const result = await crawlPage(url);
+        const pages = await crawlWebsite(url);
 
-        return res.status(200).json({
+        return res.json({
             success: true,
-            data: result,
+            totalPages: pages.length,
+            pages,
         });
-    } catch (error) {
-        console.error(error);
+    } catch (err) {
+        console.error(err);
 
         return res.status(500).json({
             success: false,
-            message: error.message,
+            message: err.message,
         });
     }
 };

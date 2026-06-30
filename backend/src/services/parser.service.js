@@ -3,6 +3,10 @@ import * as cheerio from "cheerio";
 export const parsePage = (html, pageUrl) => {
     const $ = cheerio.load(html);
 
+    $("script").remove();
+    $("style").remove();
+    $("noscript").remove();
+
     const title = $("title").text().trim();
 
     const content = $("body")
@@ -22,6 +26,7 @@ export const parsePage = (html, pageUrl) => {
 
 const extractInternalLinks = ($, pageUrl) => {
     const links = [];
+
     const base = new URL(pageUrl);
 
     $("a[href]").each((_, element) => {
@@ -30,15 +35,14 @@ const extractInternalLinks = ($, pageUrl) => {
         if (!href) return;
 
         try {
-            const absoluteUrl = new URL(href, pageUrl).href;
-            const current = new URL(absoluteUrl);
+            const absolute = new URL(href, pageUrl);
 
-            if (current.hostname === base.hostname) {
-                links.push(absoluteUrl);
+            if (absolute.hostname === base.hostname) {
+                absolute.hash = "";
+
+                links.push(absolute.href);
             }
-        } catch (err) {
-            // Ignore invalid URLs
-        }
+        } catch {}
     });
 
     return [...new Set(links)];
