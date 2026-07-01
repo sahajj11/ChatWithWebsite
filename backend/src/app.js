@@ -2,6 +2,7 @@ import express from "express"
 import cors from "cors";
 import dotenv from "dotenv";
 import crawlRouter from "../src/routes/crawl.route.js"
+import searchRouter from "../src/routes/search.route.js"
 
 dotenv.config();
 
@@ -13,6 +14,7 @@ app.use(cors())
 app.use(express.json())
 
 app.use("/api/crawl",crawlRouter)
+app.use("/api/search",searchRouter)
 
 app.get("/",(req,res)=>{
     res.status(200).json({
