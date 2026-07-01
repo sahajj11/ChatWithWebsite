@@ -11,12 +11,12 @@ export const crawl = async (req, res) => {
             });
         }
 
-        const pages = await crawlWebsite(url);
+        const documents = await crawlWebsite(url);
 
         return res.json({
             success: true,
-            totalPages: pages.length,
-            pages,
+            totalPages: documents.length,
+            documents,
         });
     } catch (err) {
         console.error(err);

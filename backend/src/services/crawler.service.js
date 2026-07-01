@@ -4,14 +4,16 @@ import { MAX_PAGES, REQUEST_DELAY } from "../utils/constants.js";
 import { delay } from "../utils/delay.js";
 import { canCrawl } from "./robots.service.js";
 import { normalizeUrl } from "../utils/url.js";
+import { chunkContent } from "./chunk.service.js";
+import { prepareChunks } from "./chunk.service.js";
 
 export const crawlWebsite = async (startUrl) => {
     const queue = [normalizeUrl(startUrl)];
     const visited = new Set();
 
-    const pages = [];
+    const documents = [];
 
-    while (queue.length > 0 && pages.length < MAX_PAGES) {
+    while (queue.length > 0 && documents.length < MAX_PAGES) {
         const currentUrl = queue.shift();
 
         if (visited.has(currentUrl)) {
@@ -39,11 +41,9 @@ export const crawlWebsite = async (startUrl) => {
 
             const page = parsePage(response.data, currentUrl);
 
-            pages.push({
-                url: page.url,
-                title: page.title,
-                content: page.content,
-            });
+            const preparedChunks = prepareChunks(page);
+
+            documents.push(...preparedChunks)
 
             for (const link of page.links) {
                 if (!visited.has(link)) {
@@ -57,5 +57,5 @@ export const crawlWebsite = async (startUrl) => {
         }
     }
 
-    return pages;
+    return documents;
 };
