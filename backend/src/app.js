@@ -5,6 +5,8 @@ import crawlRouter from "../src/routes/crawl.route.js"
 
 dotenv.config();
 
+
+
 const app=express()
 
 app.use(cors())

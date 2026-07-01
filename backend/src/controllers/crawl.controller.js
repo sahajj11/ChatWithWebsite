@@ -1,4 +1,5 @@
 import { crawlWebsite } from "../services/crawler.service.js";
+import { indexDocuments } from "../services/indexing.service.js";
 
 export const crawl = async (req, res) => {
     try {
@@ -13,10 +14,11 @@ export const crawl = async (req, res) => {
 
         const documents = await crawlWebsite(url);
 
+        await indexDocuments(documents);
+
         return res.json({
             success: true,
-            totalPages: documents.length,
-            documents,
+            indexed:documents.length
         });
     } catch (err) {
         console.error(err);
