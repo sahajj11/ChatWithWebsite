@@ -15,6 +15,30 @@ ChatWithWebsite is a lightweight Retrieval-Augmented Generation (RAG) system tha
 
 ---
 
+## Example Flow
+
+1. User enters:
+
+   ```
+   https://example.com
+   ```
+
+2. System crawls and indexes site
+
+3. User asks:
+
+   ```
+   What services does this website offer?
+   ```
+
+4. System:
+   - retrieves relevant chunks
+   - generates grounded answer
+   - returns response with citations
+  
+---
+
+
 ## System Architecture
 
 ```
@@ -166,26 +190,4 @@ This ensures:
 - Full traceability to original content
 - Website-grounded responses only
 
----
-
-## Example Flow
-
-1. User enters:
-
-   ```
-   https://example.com
-   ```
-
-2. System crawls and indexes site
-
-3. User asks:
-
-   ```
-   What services does this website offer?
-   ```
-
-4. System:
-   - retrieves relevant chunks
-   - generates grounded answer
-   - returns response with citations
 
