@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { API } from "../services/api";
 
 export default function ChatPage({ siteUrl }) {
   const [messages, setMessages] = useState([]);
@@ -16,7 +17,7 @@ export default function ChatPage({ siteUrl }) {
     setLoading(true);
 
     try {
-      const res = await axios.post("http://localhost:5000/api/chat", {
+      const res = await axios.post(`${API}/chat`, {
         message: text,
         siteUrl, // 🔥 IMPORTANT
       });

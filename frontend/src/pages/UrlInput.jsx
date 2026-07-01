@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { Globe, ArrowRight } from "lucide-react";
 import CrawlScreen from "../components/CrawlScreen";
+import { API } from "../services/api";
 
 
 export default function UrlInput({ onSiteReady }) {
@@ -19,7 +20,7 @@ export default function UrlInput({ onSiteReady }) {
   };
 
   const crawlTask = async (targetUrl) => {
-    const res = await axios.post("http://localhost:5000/api/crawl", { url: targetUrl });
+    const res = await axios.post(`${API}/crawl`, { url: targetUrl });
     return res.data;
   };
 
