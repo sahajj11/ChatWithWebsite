@@ -20,7 +20,7 @@ export default function UrlInput({ onSiteReady }) {
   };
 
   const crawlTask = async (targetUrl) => {
-    const res = await axios.post(`${API}/crawl`, { url: targetUrl });
+    const res = await API.post("/crawl", { url: targetUrl });
     return res.data;
   };
 

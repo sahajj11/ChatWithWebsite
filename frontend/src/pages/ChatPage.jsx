@@ -17,7 +17,7 @@ export default function ChatPage({ siteUrl }) {
     setLoading(true);
 
     try {
-      const res = await axios.post(`${API}/chat`, {
+      const res = await API.post("/chat", {
         message: text,
         siteUrl, // 🔥 IMPORTANT
       });
